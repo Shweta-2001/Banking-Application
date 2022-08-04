@@ -14,6 +14,7 @@ public class BankDetails
 	private String acc_type;
 	private int balance;
 	private int amnt;
+	static String sql = "";
 	Scanner sc = new Scanner(System.in);
 		
 	public void openAccount() 
@@ -36,13 +37,13 @@ public class BankDetails
 			
 			Statement stmt = con.createStatement();
 			
-			String sql = "insert into customers(cname,ac_type,balance) values ('"+name+"','"+acc_type+"','"+balance+"')";
+			sql = "insert into customers(cname,ac_type,balance) values ('"+name+"','"+acc_type+"','"+balance+"')";
 			stmt.executeUpdate(sql);
 			System.out.println("Account Created");
 			ResultSet rs = stmt.executeQuery("select ac_no from customers where cname='"+name+"' ");
 			while(rs.next())
 			{
-				System.out.println("Account Number"+rs.getLong(1));
+				System.out.println("Account Number : "+rs.getLong(1));
 			}
 			rs.close();
 			stmt.close();
@@ -76,11 +77,15 @@ public class BankDetails
 			
 			Statement stmt = con.createStatement();
 			
-			ResultSet rs = stmt.executeQuery("select balance from customers where ac_no = '"+accno+"' ");
+			ResultSet rs = stmt.executeQuery("select * from customers where ac_no = '"+accno+"' ");
+			//System.out.println("Hello");
 			while(rs.next())
 			{
-				System.out.println("Balance"+rs.getLong(balance));
+				//System.out.println("Hello");
+				System.out.println("Balance : "+rs.getLong(4));
+				//System.out.println("ACC no: "+rs.getLong(1)+ " Name: "+rs.getString(2)+"Type: "+rs.getString(3)+"Bal: "+rs.getLong(4));
 			}
+			//System.out.println("Hello");
 			rs.close();
 			stmt.close();
 		}
@@ -114,13 +119,13 @@ public class BankDetails
 			Statement stmt = con.createStatement();
 			
 			//String sql = "update customers set balance = balance + '" +amnt+"' where" + "ac_no = '" + accno+"' ";
-			String sql = "update customers set balance = balance + '"+amnt+"' where ac_no = '"+accno+"' ";
+			 sql = "update customers set balance = balance + '"+amnt+"' where ac_no = '"+accno+"' ";
 			stmt.executeUpdate(sql);
-			System.out.println("Amount deposited");
+			System.out.println("Amount Deposited Successfully");
 			ResultSet rs = stmt.executeQuery("select * from customers where ac_no='"+accno+"' ");
 			while(rs.next())
 			{
-				System.out.println("Balance"+rs.getLong(4));
+				System.out.println("Balance : "+rs.getLong(4));
 			}
 			rs.close();
 			stmt.close();
@@ -156,14 +161,14 @@ public class BankDetails
 			Statement stmt = con.createStatement();
 			
 			//String sql = "Update customers set balance = balance + '"+amnt+"' where" + "ac_no = '"+accno+"' ";
-			String sql = "update customers set balance=balance- '"+ amnt+"' where ac_no= '"+accno+"' ";
+			 sql = "update customers set balance = balance - '"+ amnt+"' where ac_no= '"+accno+"' ";
 			//stmt.executeUpdate("Update customers set balance = balance -'"+amnt+"' where" + "ac_no = '"+accno+"' ");
 			stmt.executeUpdate(sql);
-			System.out.println("Amount withdrawn");
+			System.out.println("Amount Withdrawn Successfully");
 			ResultSet rs = stmt.executeQuery("select * from customers where ac_no= '"+accno+"' ");
 			while(rs.next())
 			{
-				System.out.println("Balance"+rs.getLong(4));
+				System.out.println("Balance : "+rs.getLong(4));
 			}
 			rs.close();
 			stmt.close();
